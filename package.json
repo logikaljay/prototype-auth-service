@@ -34,5 +34,8 @@
   },
   "release": {
     "verifyConditions": "condition-circle"
+  },
+  "dependencies": {
+    "hapi": "^11.1.2"
   }
 }

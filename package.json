@@ -1,6 +1,6 @@
 {
   "name": "prototype-auth-service",
-  "version": "0.0.0-semantically-released",
+  "version": "0.0.0-semantic-release",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -16,6 +16,7 @@
   "devDependencies": {
     "code": "^2.0.1",
     "commitizen": "^2.4.6",
+    "condition-circle": "^1.2.0",
     "cz-conventional-changelog": "^1.1.5",
     "eslint-config-chasevida": "^0.1.1",
     "eslint-plugin-chasevida": "^0.1.2",
@@ -29,6 +30,9 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/logikaljay/prototype-auth-service.git"
+  },
+  "release": {
+    "verifyConditions": "condition-circle"
   }
 }

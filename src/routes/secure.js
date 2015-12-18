@@ -5,7 +5,7 @@ var secret = "TOPSECRET"
 
 var internals = {
     method: 'GET',
-    path: '/',
+    path: '/secure',
     handler: (request, reply) => {
         // validate the request
         var auth
@@ -20,9 +20,9 @@ var internals = {
         }
         
         // decode the token
-        JWT.verify(auth[1], secret, (err, token) => {
+        JWT.verify(token, secret, (err, token) => {
             if (err) {
-                reply({error: String.denied }).code(400)
+                reply({ error: String.denied }).code(400)
             }
             else {
                 reply({token})

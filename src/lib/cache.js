@@ -57,18 +57,19 @@ class Cache {
 
         return promise
     }
-    
+
     set(key, val) {
         var cache = this
         
         var promise = new Promise((resolve, reject) => {
-            cache.redis.set(key, val)
-            resolve(cache)
+            cache.redis.set(key, val, (e) => {
+                resolve(cache)
+            })
         })
         
         return promise
     }
-    
+
     done() {
         this.redis.end()
     }

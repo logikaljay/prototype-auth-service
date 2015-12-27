@@ -1,6 +1,6 @@
 machine:
   pre:
-    - ./scripts/start-redis.sh
+    - scripts/start-redis.sh
   node:
     version: "4.2"
 test:

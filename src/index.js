@@ -3,35 +3,50 @@ var Router = require('hapi-router')
 var Good = require('good')
 var GoodConsole = require('good-console')
 var Cache = require('./lib/cache')
+var AuthBearer = require('hapi-auth-bearer-token')
+var Strategy = require('./lib/strategy')
 
 var instance = {
     port: 8080,
     
     plugins: [
         {
-            register: Good,
-            options: {
-                reporters: [{
-                    reporter: GoodConsole,
-                    events: { log: '*', response: '*' }
-                }]
-            }
-        },
-        {
-            register: Router,
-            options: {
-                routes: './src/routes/*.js'
-            }
+            register: AuthBearer
         }
     ],
     
     init: () => {
+        // add logging if NODE_ENV is not test
+        if (process.env.NODE_ENV !== 'test') {
+            instance.plugins.push({
+                register: Good,
+                options: {
+                    reporters: [{
+                        reporter: GoodConsole,
+                        events: { log: '*', response: '*' }
+                    }]
+                }
+            })
+        }
+        
         var server = new Hapi.Server()
         server.connection({ port: instance.port })
         
         server.register(instance.plugins, (err) => {
             if (err) {
                 console.log('Failed to load plugin: %s', err)
+            }
+            
+            server.auth.strategy('simple', 'bearer-access-token', Strategy)
+        })
+        
+        server.register({
+            register: Router,
+            options: { routes: './src/routes/*.js' }
+        },
+        (err) => {
+            if (err) {
+                console.log('Failed to register routes: %s', err)
             }
         })
         
@@ -43,6 +58,8 @@ var instance = {
                 console.log("Hapi listening on %s", server.info.uri)
             }
         })
+        
+        return server
     },
     
     cleanup: (opts) => {
@@ -51,10 +68,12 @@ var instance = {
     }
 }
 
-// setup the cache before listening for connections
+// start hapi
+var server = instance.init()
+
+// setup the cache
 var cache = new Cache()
 cache.connect()
-    .then(instance.init.bind(null))
     .catch((ex) => console.log(ex.stack))
 
-module.exports = instance
+module.exports = server

@@ -36,10 +36,12 @@
     "verifyConditions": "condition-circle"
   },
   "dependencies": {
+    "cassandra-driver": "^3.0.0",
     "good": "^6.4.0",
     "good-console": "^5.2.0",
     "hapi": "^11.1.2",
     "hapi-auth-bearer-simple": "^3.0.2",
+    "hapi-auth-bearer-token": "^4.0.0",
     "hapi-router": "^3.4.0",
     "jsonwebtoken": "^5.4.1",
     "node-uuid": "^1.4.7",

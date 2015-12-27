@@ -1,9 +1,11 @@
 var Cache = require('../lib/cache')
 var JWT = require('jsonwebtoken')
+var uuid = require('node-uuid')
+var crypto = require('crypto')
 var users = require('../users.json')
 
 var internals = {
-    method: 'GET',
+    method: 'DELETE',
     path: '/',
     config: {
         auth: 'simple',
@@ -13,17 +15,15 @@ var internals = {
                 return
             }
 
-            // get all of the tokens for the userId
+            // revoke this token from the whitelist
             var token = request.auth.credentials.token
             var cache = Cache.instance
-            cache.get(token.userId)
-                .then((res) => {
-                    var output = []
-                    for (var obj in res) {
-                        output.push({ sessionId: obj, token: res[obj] })
-                    }
-                    
-                    reply(output)
+            cache.del(token.userId, token.sessionId)
+                .then(() => {
+                    reply({ status: String.ok }).code(200)
+                })
+                .catch((e) => {
+                    reply({ error: e }).code(400)
                 })
         }
     }

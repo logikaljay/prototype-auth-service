@@ -1,0 +1,17 @@
+[
+    {
+        "userId": "63c233d2",
+        "userName": "jay.baker@touchcast.co.nz",
+        "secret": "0b14d501a594442a01c6859541bcb3e8164d183d32937b851835442f69d5c94e"
+    },
+    {
+        "userId": "12345678",
+        "userName": "logikal@gmail.com",
+        "secret": "6cf615d5bcaac778352a8f1f3360d23f02f34ec182e259897fd6ce485d7870d4"
+    },
+    {
+        "userId": "87654321",
+        "userName": "logikal@outlook.com",
+        "secret": "5906ac361a137e2d286465cd6588ebb5ac3f5ae955001100bc41577c3d751764"
+    }
+]

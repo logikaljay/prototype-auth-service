@@ -43,11 +43,26 @@ var internals = {
             var token = JWT.sign({ userName: user.userName, userId: user.userId, sessionId }, secret) 
             var cache = Cache.instance
             
-            // whitelist this token in redis
-            cache.set(user.userId, { sessionId, token })
-            
-            // reply with the token
-            reply({ userId: user.userId, token })
+            if ( ! cache) {
+                cache = new Cache()
+                cache.connect()
+                    .then(() => {
+                        // whitelist this token in redis
+                        cache.set(user.userId, { sessionId, token })
+
+                        // reply with the token
+                        reply({ userId: user.userId, token })
+                    })
+            }
+            else {
+                    
+                // whitelist this token in redis
+                cache.set(user.userId, { sessionId, token })
+                
+                // reply with the token
+                reply({ userId: user.userId, token })
+                
+            }
         }
         else {
             reply({ error: String.denied }).code(400)

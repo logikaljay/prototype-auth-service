@@ -39,16 +39,28 @@ var internals = {
         var sessionId = uuid.v4().split('-').join('')
 
         if (user) {
-            var cache = Cache.instance
-            
             // generate a token from the result of the third party
             var token = JWT.sign({ userName: user.userName, userId: user.userId, sessionId }, secret)
-            
-            // whitelist this token in redis
-            cache.set(user.userId, { sessionId, token })
-            
-            // reply with the token
-            reply({ userId: user.userId, token })
+                    
+            var cache = Cache.instance
+            if ( ! cache) {
+                cache = new Cache()
+                cache.connect()
+                    .then(() => {
+                        // whitelist this token in redis
+                        cache.set(user.userId, { sessionId, token })
+                        
+                        // reply with the token
+                        reply({ userId: user.userId, token })
+                    })
+            } 
+            else {
+                // whitelist this token in redis
+                cache.set(user.userId, { sessionId, token })
+                
+                // reply with the token
+                reply({ userId: user.userId, token })
+            }
         }
         else {
             reply({ error: String.denied }).code(400)

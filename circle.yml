@@ -3,7 +3,7 @@ machine:
     - docker
   node:
     version: "4.2"
-dependancies:
+dependencies:
   override:
     - docker run --name prototype-auth-redis -p 6379:6379 -d redis redis-server --appendonly yes
 test:

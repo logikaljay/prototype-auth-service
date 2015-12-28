@@ -1,3 +1,3 @@
 #!/bin/bash
 
-ab -n $1 -T application/json -m POST -P ab-session.data http://localhost:8080/
+ab -n $* -T 'application/json' -p ab-session.data http://127.0.0.1:8080/

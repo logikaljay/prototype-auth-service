@@ -9,6 +9,7 @@ Authentication REST API service that uses redis for a token whitelist.
     1. [Get a token](#get-a-token)
     1. [List all tokens](#list-all-tokens)
     1. [Delete a token](#delete-a-token)
+1. [Benchmarks](#benchmarks)
 1. [Todo](#todo)
 
 <a name="endpoints"></a>
@@ -68,6 +69,31 @@ Output
 {
     "status":"Token removed"
 }
+```
+
+<a name="benchmarks"></a>
+## Benchmarks
+```
+Server Software:        
+Server Hostname:        127.0.0.1
+Server Port:            8080
+
+Document Path:          /
+Document Length:        270 bytes
+
+Concurrency Level:      130
+Time taken for tests:   9.288 seconds
+Complete requests:      10000
+Failed requests:        0
+Total transferred:      4380000 bytes
+Total body sent:        1960000
+HTML transferred:       2700000 bytes
+Requests per second:    1076.70 [#/sec] (mean)
+Time per request:       120.739 [ms] (mean)
+Time per request:       0.929 [ms] (mean, across all concurrent requests)
+Transfer rate:          460.54 [Kbytes/sec] received
+                        206.09 kb/s sent
+                        666.63 kb/s total
 ```
 
 <a name="todo"></a>

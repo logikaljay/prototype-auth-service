@@ -1,6 +1,6 @@
 machine:
   pre:
-    - scripts/start-redis.sh
+    - docker run --name prototype-auth-redis -p 6379:6379 -d redis redis-server --appendonly yes
   node:
     version: "4.2"
 test:

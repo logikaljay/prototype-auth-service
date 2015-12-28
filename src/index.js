@@ -68,7 +68,7 @@ var instance = {
     }
 }
 
-// start hapi
+// setup hapi
 var server = instance.init()
 
 // setup the cache

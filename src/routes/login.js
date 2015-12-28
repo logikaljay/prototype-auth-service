@@ -40,27 +40,14 @@ var internals = {
 
         if (user) {
             // generate a token from the result of the third party
-            var token = JWT.sign({ userName: user.userName, userId: user.userId, sessionId }, secret)
-                    
+            var token = JWT.sign({ userName: user.userName, userId: user.userId, sessionId }, secret) 
             var cache = Cache.instance
-            if ( ! cache) {
-                cache = new Cache()
-                cache.connect()
-                    .then(() => {
-                        // whitelist this token in redis
-                        cache.set(user.userId, { sessionId, token })
-                        
-                        // reply with the token
-                        reply({ userId: user.userId, token })
-                    })
-            } 
-            else {
-                // whitelist this token in redis
-                cache.set(user.userId, { sessionId, token })
-                
-                // reply with the token
-                reply({ userId: user.userId, token })
-            }
+            
+            // whitelist this token in redis
+            cache.set(user.userId, { sessionId, token })
+            
+            // reply with the token
+            reply({ userId: user.userId, token })
         }
         else {
             reply({ error: String.denied }).code(400)

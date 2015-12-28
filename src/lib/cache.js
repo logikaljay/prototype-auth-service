@@ -7,7 +7,7 @@ var instance
 class Cache {
     constructor(opts) {
         var defaults = {
-            host: '127.0.0.1',
+            host: process.platform !== 'darwin' ? 'localhost' : '192.168.99.100',
             port: 9736,
             socket_keepalive: false
         }

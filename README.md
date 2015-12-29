@@ -28,42 +28,42 @@ Authentication REST API service that uses redis for a token whitelist.
 <a name="install"></a>
 ## Install
 1. Clone the repository
-```bash
-$ git clone https://github.com/logikaljay/prototype-auth-service
-Cloning into 'prototype-auth-service'...
-remote: Counting objects: 145, done.
-remote: Compressing objects: 100% (83/83), done.
-remote: Total 145 (delta 34), reused 0 (delta 0), pack-reused 62
-Receiving objects: 100% (145/145), 22.83 KiB | 0 bytes/s, done.
-Resolving deltas: 100% (52/52), done.
-Checking connectivity... done.
-```
+    ```bash
+    $ git clone https://github.com/logikaljay/prototype-auth-service
+    Cloning into 'prototype-auth-service'...
+    remote: Counting objects: 145, done.
+    remote: Compressing objects: 100% (83/83), done.
+    remote: Total 145 (delta 34), reused 0 (delta 0), pack-reused 62
+    Receiving objects: 100% (145/145), 22.83 KiB | 0 bytes/s, done.
+    Resolving deltas: 100% (52/52), done.
+    Checking connectivity... done.
+    ```
 
 2. Change directory into the cloned repository
-```bash
-$ cd prototype-auth-service
-```
+    ```bash
+    $ cd prototype-auth-service
+    ```
 
 3. Install node dependencies
-```bash
-$ npm install
-```
+    ```bash
+    $ npm install
+    ```
 
 4. Start redis docker container
-```bash
-$ ./scripts/start-redis.sh 
-Unable to find image 'redis:latest' locally
-latest: Pulling from library/redis
-c950d63587be: Pull complete 
-...
-983055d62ddd: Pull complete 
-Digest: sha256:4db2d14088d8bf21d9541010fdbca78697bd9dd51010728f50ee8f7893321367
-Status: Downloaded newer image for redis:latest
-d9e1de4982ddea060c06df6d30b68671dc1370d9ca2ada46b20b8beddc02031f
-```
+    ```bash
+    $ ./scripts/start-redis.sh 
+    Unable to find image 'redis:latest' locally
+    latest: Pulling from library/redis
+    c950d63587be: Pull complete 
+    ...
+    983055d62ddd: Pull complete 
+    Digest: sha256:4db2d14088d8bf21d9541010fdbca78697bd9dd51010728f50ee8f7893321367
+    Status: Downloaded newer image for redis:latest
+    d9e1de4982ddea060c06df6d30b68671dc1370d9ca2ada46b20b8beddc02031f
+    ```
 
 5. Run tests
-```bash
+    ```bash
     $ npm test
     
     > prototype-auth-service@0.0.0-semantic-release test /home/user/prototype-auth-service
@@ -76,17 +76,17 @@ d9e1de4982ddea060c06df6d30b68671dc1370d9ca2ada46b20b8beddc02031f
     6 tests complete
     Test duration: 72 ms
     No global variable leaks detected
-```
+    ```
 
 6. Start service
-```bash
+    ```bash
     $ npm start
     
     > prototype-auth-service@0.0.0-semantic-release start /home/user/prototype-auth-service
     > node index
     
     Hapi listening on http://127.0.0.1:8080
-```
+    ```
 
 <a name="endpoints"></a>
 # Endpoints

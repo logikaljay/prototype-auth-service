@@ -33,7 +33,7 @@ lab.experiment('Secure', () => {
                 
                 expect(response.statusCode).to.equal(200)
                 expect(result).to.be.instanceOf(Object)
-                expect(result).to.include('result')
+                expect(result).to.include('status')
                 done()
             })
         })

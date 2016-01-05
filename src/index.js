@@ -3,7 +3,7 @@ var Router = require('hapi-router')
 var Good = require('good')
 var GoodConsole = require('good-console')
 var Cache = require('./lib/cache')
-var AuthBearer = require('hapi-auth-bearer-token')
+var AuthBearerToken = require('hapi-auth-bearer-token')
 var Strategy = require('./lib/strategy')
 
 var instance = {
@@ -11,7 +11,7 @@ var instance = {
     
     plugins: [
         {
-            register: AuthBearer
+            register: AuthBearerToken
         }
     ],
     

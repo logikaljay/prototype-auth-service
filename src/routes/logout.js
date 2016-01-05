@@ -20,7 +20,7 @@ var internals = {
             var cache = Cache.instance
             cache.del(token.userId, token.sessionId)
                 .then(() => {
-                    reply({ status: String.ok }).code(200)
+                    reply({ status: String.removed }).code(200)
                 })
                 .catch((e) => {
                     reply({ error: e }).code(400)

@@ -6,9 +6,7 @@ var secret = "TOPSECRET"
 
 module.exports = {
     allowQueryToken: false,
-
     allowMultipleHeaders: false,
-    
     accessTokenName: 'access_token',
 
     validateFunc: (token, callback) => {

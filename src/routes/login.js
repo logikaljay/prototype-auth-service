@@ -20,7 +20,7 @@ var internals = {
             if (request.payload === null) {
                 throw 'Missing fields'
             }
-            
+
             ['userName', 'password'].forEach((required) => {
                 if ( ! request.payload.hasOwnProperty(required)) {
                     throw String.format('%s required', required)
@@ -31,7 +31,7 @@ var internals = {
             user = users.filter((user) => {
                 return user.userName.toLowerCase() === request.payload.userName.toLowerCase()
             })[0]
-            
+
             if ( ! user || crypto.createHash('sha256').update(request.payload.password).digest('hex') !== user.secret) {
                 throw ''
             }
@@ -71,7 +71,6 @@ var internals = {
         else {
             reply({ error: String.denied }).code(400)
         }
-
     }
 }
 

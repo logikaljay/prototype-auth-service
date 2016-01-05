@@ -12,6 +12,8 @@ Authentication REST API service that uses redis for a token whitelist.
     1. [Get a token](#get-a-token)
     1. [List all tokens](#list-all-tokens)
     1. [Delete a token](#delete-a-token)
+    1. [Validate a token](#validate-a-token)
+    1. [Validate a token (less secure but much faster)](#validate-a-token-less)
 1. [Benchmarks](#benchmarks)
 1. [Todo](#todo)
 
@@ -144,6 +146,32 @@ Output
 ```json
 {
     "status":"Token removed"
+}
+```
+
+<a name="validate-a-token"></a>
+## Validate a token
+```bash
+$ curl -X "POST" http://localhost:8080/validate -H "Content-Type: application/json" -d '{ "userid": "63c233d2", "token": "TOKEN" }'
+```
+
+Output
+```json
+{
+    "status":"Valid token"
+}
+```
+
+<a name="validate-a-token-less"></a>
+## Validate a token (Less secure, but much faster)
+```bash
+$ curl -X "DELETE" http://localhost:8080/secure -H "Content-Type: application/json" -H "Authorization: Bearer TOKEN"
+```
+
+Output
+```json
+{
+    "status": "Valid token"
 }
 ```
 

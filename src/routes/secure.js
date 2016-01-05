@@ -9,7 +9,7 @@ var internals = {
     config: {
         auth: 'simple',
         handler: (request, reply) => {
-            reply({ result: 'valid' })
+            reply({ status: 'Valid token' })
         }
     }
 }

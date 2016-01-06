@@ -9,7 +9,7 @@
     "debug": "node --debug index",
     "lint": "eslint *.js ./src/*.js ./src/**/*.js ./test/*.js ./test/**/*.js",
     "commit": "git-cz",
-    "semantic-release": "semantic-release pre --analyze-commits=\"nomajor-commit-analyzer\" && npm publish && semantic-release post"
+    "semantic-release": "semantic-release pre --analyze-commits=\"node_modules/nomajor-commit-analyzer\" && npm publish && semantic-release post"
   },
   "author": "",
   "license": "ISC",

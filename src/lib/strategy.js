@@ -15,6 +15,7 @@ module.exports = {
                 return callback(null, true, { token })
             }
             else {
+                // log any error or failed login attempt.
                 return callback(null, false, { token })
             }
         })

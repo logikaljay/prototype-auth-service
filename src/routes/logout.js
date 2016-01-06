@@ -10,11 +10,6 @@ var internals = {
     config: {
         auth: 'simple',
         handler: (request, reply) => {
-            if ( ! request.auth.isAuthenticated) {
-                reply({ error: String.denied }).code(400)
-                return
-            }
-
             // revoke this token from the whitelist
             var token = request.auth.credentials.token
             var cache = Cache.instance

@@ -30,7 +30,7 @@ var internals = {
         cache.get(request.payload.userid)
             .then((tokens) => {
                 if ( ! tokens) {
-                    reply({ status: 'Invalid token' })
+                    reply({ status: 'Invalid token' }).code(401)
                     return
                 }
 

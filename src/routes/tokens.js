@@ -8,11 +8,6 @@ var internals = {
     config: {
         auth: 'simple',
         handler: (request, reply) => {
-            if ( ! request.auth.isAuthenticated) {
-                reply({ error: String.denied }).code(400)
-                return
-            }
-
             // get all of the tokens for the userId
             var token = request.auth.credentials.token
             var cache = Cache.instance

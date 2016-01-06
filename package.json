@@ -9,11 +9,12 @@
     "debug": "node --debug index",
     "lint": "eslint *.js ./src/*.js ./src/**/*.js ./test/*.js ./test/**/*.js",
     "commit": "git-cz",
-    "semantic-release": "semantic-release pre --analyze-commits=\"/home/ubuntu/prototype-auth-service/node_modules/nomajor-commit-analyzer\" && npm publish && semantic-release post"
+    "semantic-release": "semantic-release pre --analyze-commits=\"node_modules/nomajor-commit-analyzer\" && npm publish && semantic-release post"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "babel": "^6.3.26",
     "code": "^2.0.1",
     "commitizen": "^2.4.6",
     "condition-circle": "^1.2.0",

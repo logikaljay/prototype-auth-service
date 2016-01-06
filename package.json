@@ -9,7 +9,7 @@
     "debug": "node --debug index",
     "lint": "eslint *.js ./src/*.js ./src/**/*.js ./test/*.js ./test/**/*.js",
     "commit": "git-cz",
-    "semantic-release": "semantic-release pre --analyze-commits=\"node_modules/nomajor-commit-analyzer\" && npm publish && semantic-release post"
+    "semantic-release": "semantic-release pre --analyze-commits=\"nomajor-commit-analyzer\" && npm publish && semantic-release post"
   },
   "author": "",
   "license": "ISC",
@@ -47,7 +47,6 @@
     "hapi-router": "^3.4.0",
     "jsonwebtoken": "^5.4.1",
     "node-uuid": "^1.4.7",
-    "nomajor-commit-analyzer": "^1.0.0",
     "redis": "^2.4.2"
   }
 }

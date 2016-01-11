@@ -109,7 +109,7 @@ class Cache {
     del(key, val) {
         var cache = this
         var promise = new Promise((resolve, reject) => {
-            cache.redis.del(key, val, (err) => {
+            cache.redis.srem(key, val, (err) => {
                 if (err) {
                     reject(err)
                 }

@@ -13,7 +13,7 @@ var internals = {
             // revoke this token from the whitelist
             var token = request.auth.credentials.token
             var cache = Cache.instance
-            cache.del(token.userId, token.sessionId)
+            cache.del('tokens:' + token.userId, token)
                 .then(() => {
                     reply({ status: String.removed }).code(200)
                 })

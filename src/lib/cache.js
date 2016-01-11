@@ -8,11 +8,9 @@ class Cache {
     constructor(opts) {
         var defaults = {
             host: process.platform !== 'darwin' ? 'localhost' : '192.168.99.100',
-            port: 6379,
+            port: 9736,
             socket_keepalive: false
         }
-        
-        defaults.host = 'prototype-auth-redis'
 
         this.options = Object.assign(defaults, opts)
     }
@@ -65,7 +63,7 @@ class Cache {
         var promise = new Promise((resolve, reject) => {
             cache.redis.sadd(key, val, (err) => {
                 if (err) {
-                    reject(err)
+                    reject(e)
                 }
                 else {
                     resolve(cache)

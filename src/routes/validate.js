@@ -16,9 +16,6 @@ var internals = {
             else if ( ! request.payload.token) {
                 throw 'No token supplied'
             }
-            else if ( ! request.payload.userid) {
-                throw 'No userid supplied'
-            }
         }
         catch (ex) {
             reply({ error: ex }).code(401)
@@ -27,29 +24,30 @@ var internals = {
         // check that the token is in our cache
         var cache = Cache.instance
 
-        cache.get(request.payload.userid)
-            .then((tokens) => {
-                if ( ! tokens) {
-                    reply({ status: 'Invalid token' }).code(401)
-                    return
-                }
+        JWT.verify(request.payload.token, secret, (err, token) => {
+        
+            if (err) {
+                reply({ status: 'Invalid token' }).code(401)
+                return
+            }
+            
+            cache.get('tokens:' + token.userId)
+                .then((tokens) => {
 
-                // make sure that the token in the payload exists in the cache and is valid
-                var values = Object.keys(tokens).map(key => tokens[key])
-                if (values.indexOf(request.payload.token) > -1) {
-                    JWT.verify(request.payload.token, secret, (err, token) => {
+                    // make sure that the token in the payload exists in the cache and is valid
+                    if (tokens.indexOf(request.payload.token) > -1) {
                         if (err) {
                             reply({ status: 'Invalid token' })
                             return
                         }
 
                         reply({ status: 'Valid token' })
-                    })
-                }
-                else {
-                    reply({ status: 'Invalid token' })
-                }
-            })
+                    }
+                    else {
+                        reply({ status: 'Invalid token' })
+                    }
+                })
+        })
     }
 }
 

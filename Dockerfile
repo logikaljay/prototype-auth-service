@@ -1,4 +1,5 @@
 FROM node:4.2.2
 COPY . /src
+EXPOSE 8080
 RUN cd /src && npm install
-CMD node /src/index.js
+CMD cd /src && node ./

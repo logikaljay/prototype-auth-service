@@ -14,7 +14,7 @@ var internals = {
     path: '/',
     handler: (request, reply) => {
         var user
-
+        
         // validate the request
         try {
             if (request.payload === null) {
@@ -40,36 +40,57 @@ var internals = {
             reply({ error: ex ? ex.toString() : String.denied }).code(401)
             return
         }
+        
+        var cache = Cache.instance
+        
+        var getSessionId = ((cache) => {
+            return new Promise((resolve, reject) => {
+                // check if there is already a sessionId issued for this userId and use the sessionId when generating a new token
+                cache.get('session:' + user.userId)
+                    .then((tokens) => {
+                        if (tokens && tokens[0] !== null) {
+                            resolve(Object.keys(tokens)[0])
+                        }
+                        else {
+                            var sessionId = uuid.v4().split('-').join('')
+                            cache.set('session:' + user.userId, sessionId)
+                            resolve(sessionId)
+                        }
+                    })
+            })
+        })
+        
+        var generateToken = ((sessionId) => {
+            return new Promise((resolve, reject) => {
+                // generate a token from the result of the third party
+                var token = JWT.sign({ userName: user.userName, userId: user.userId, sessionId }, secret) 
+                var cache = Cache.instance
 
-        // generate a sessionId
-        var sessionId = uuid.v4().split('-').join('')
-
-        if (user) {
-            // generate a token from the result of the third party
-            var token = JWT.sign({ userName: user.userName, userId: user.userId, sessionId }, secret) 
-            var cache = Cache.instance
-
-            if ( ! cache) {
+                // whitelist this token in redis
+                cache.add('tokens:' + user.userId, token)
+                
+                resolve(token)
+            })
+        })
+        
+        var replyWithToken = ((token) => {
+            new Promise((resolve, reject) => {
+                reply({ userId: user.userId, token })
+                resolve()
+            })
+        })
+        
+        if ( ! cache) {
                 cache = new Cache()
                 cache.connect()
-                    .then(() => {
-                        // whitelist this token in redis
-                        cache.set(user.userId, { sessionId, token })
-
-                        // reply with the token
-                        reply({ userId: user.userId, token })
-                    })
-            }
-            else {
-                // whitelist this token in redis
-                cache.set(user.userId, { sessionId, token })
-                
-                // reply with the token
-                reply({ userId: user.userId, token })
-            }
+                    .then(getSessionId)
+                    .then((sessionId) => generateToken(sessionId))
+                    .then((token) => replyWithToken(token))
         }
         else {
-            reply({ error: String.denied }).code(400)
+            getSessionId(cache)
+                .then((sessionId) => generateToken(sessionId))
+                .then((token) => replyWithToken(token))
         }
     }
 }

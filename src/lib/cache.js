@@ -8,9 +8,11 @@ class Cache {
     constructor(opts) {
         var defaults = {
             host: process.platform !== 'darwin' ? 'localhost' : '192.168.99.100',
-            port: 9736,
+            port: 6379,
             socket_keepalive: false
         }
+        
+        defaults.host = 'prototype-auth-redis'
 
         this.options = Object.assign(defaults, opts)
     }
@@ -39,7 +41,7 @@ class Cache {
         var cache = this
         
         var _get = (key, resolve, reject) => {
-            cache.redis.hgetall(key, (err, value) => {
+            cache.redis.get(key, (err, value) => {
                 if (err) {
                     reject(err)
                 }
@@ -57,12 +59,34 @@ class Cache {
         return promise
     }
 
+    add(key, val) {
+        var cache = this
+
+        var promise = new Promise((resolve, reject) => {
+            cache.redis.sadd(key, val, (err) => {
+                if (err) {
+                    reject(err)
+                }
+                else {
+                    resolve(cache)
+                }
+            })
+        })
+
+        return promise
+    }
+
     set(key, val) {
         var cache = this
         
         var promise = new Promise((resolve, reject) => {
-            cache.redis.hset(key, val.sessionId, val.token, (e) => {
-                resolve(cache)
+            cache.redis.set(key, val, (err) => {
+                if (err) {
+                    reject(err)
+                }
+                else {
+                    resolve(cache)
+                }
             })
         })
 
@@ -72,8 +96,13 @@ class Cache {
     del(key, val) {
         var cache = this
         var promise = new Promise((resolve, reject) => {
-            cache.redis.hdel(key, val, (e) => {
-                resolve(cache)
+            cache.redis.del(key, val, (err) => {
+                if (err) {
+                    reject(err)
+                }
+                else {
+                    resolve(cache)
+                }
             })
         })
 

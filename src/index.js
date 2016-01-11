@@ -5,6 +5,7 @@ var GoodConsole = require('good-console')
 var Cache = require('./lib/cache')
 var AuthBearerToken = require('hapi-auth-bearer-token')
 var Strategy = require('./lib/strategy')
+var Path = require('path')
 
 var instance = {
     port: 8080,

@@ -37,16 +37,31 @@ class Cache {
 
     get(key) {
         var cache = this
+        var _get;
         
-        var _get = (key, resolve, reject) => {
-            cache.redis.get(key, (err, value) => {
-                if (err) {
-                    reject(err)
-                }
-                else {
-                    resolve(value)
-                }
-            })
+        if (key.indexOf('session') > -1) {
+            _get = (key, resolve, reject) => {
+                cache.redis.get(key, (err, value) => {
+                    if (err) {
+                        reject(err)
+                    }
+                    else {
+                        resolve(value)
+                    }
+                })
+            }
+        }
+        else {
+            _get = (key, resolve, reject) => {
+                cache.redis.smembers(key, (err, value) => {
+                    if (err) {
+                        reject(err)
+                    }
+                    else {
+                        resolve(value)
+                    }
+                })
+            }
         }
 
         var promise = new Promise((resolve, reject) => {
@@ -63,7 +78,7 @@ class Cache {
         var promise = new Promise((resolve, reject) => {
             cache.redis.sadd(key, val, (err) => {
                 if (err) {
-                    reject(e)
+                    reject(err)
                 }
                 else {
                     resolve(cache)

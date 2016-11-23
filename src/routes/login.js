@@ -1,6 +1,6 @@
 var Cache = require('../lib/cache')
 var JWT = require('jsonwebtoken')
-var uuid = require('node-uuid')
+var uuid = require('uuid')
 var crypto = require('crypto')
 
 // temp - load all users from a "database"
